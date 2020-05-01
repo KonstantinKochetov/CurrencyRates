@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_flag"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/d_country_flag_of_the_currency"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_bgn" />
+
+    <TextView
+        android:id="@+id/tv_currency_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto"
+        android:letterSpacing="-0.02"
+        android:lineSpacingExtra="5sp"
+        android:textColor="#191C1F"
+        android:textSize="16sp"
+        android:translationY="-2.62sp"
+        app:layout_constraintStart_toEndOf="@id/iv_flag"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="BGN" />
+
+
+    <TextView
+        android:id="@+id/currency_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/roboto"
+        android:letterSpacing="-0.01"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#8B959E"
+        android:textSize="14sp"
+        android:translationY="-1.8sp"
+        app:layout_constraintStart_toEndOf="@id/iv_flag"
+        app:layout_constraintTop_toBottomOf="@id/tv_currency_code"
+        tools:text="Bulgarian Lev" />
+
+    <EditText
+        android:id="@+id/et_currency_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:letterSpacing="0.02"
+        android:lineSpacingExtra="5sp"
+        android:textColor="#191C1F"
+        android:textSize="20sp"
+        android:translationY="-2.28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="LabelFor"
+        tools:text="100,00" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
