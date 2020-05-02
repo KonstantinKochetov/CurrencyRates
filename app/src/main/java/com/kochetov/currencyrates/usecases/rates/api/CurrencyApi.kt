@@ -12,6 +12,6 @@ interface CurrencyApi {
     }
 
     @GET(CURRENCY_RATES_LATEST)
-    fun getRates(@Query("base") base: String): Single<CurrencyRatesResponse>
+    fun getRates(@Query("base") apiBase: String): Single<CurrencyRatesResponse>
 
 }

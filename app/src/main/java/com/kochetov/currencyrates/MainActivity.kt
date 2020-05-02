@@ -11,31 +11,26 @@ class MainActivity : AppCompatActivity() {
 
         /*
 
-        Architecture: MVVM/MVI
-
         TechStack:
+        MVVM/MVI
         Dagger
-        TODO RxJava
-        TODO Retrofit
+        RxJava
+        Retrofit
         NavComponent
         TODO: Ktlint for static code analysis
         TODO: MockK for testing
-
         * */
 
         /*
-        * TODO Rotation kills it
-        * TODO check if RxJava operators delay and repeat were correct
-        * TODO use observable instead of Single?
-        * TODO adding to compositeDisposables two times
-        * TODO flag icons
+        * TODO Inject base without restarting the flwo
+        * TODO Custom Errors
+        * TODO check if RxJava operators delay, repeat, retry were correct
         * TODO app icon
         * TODO styles
-        * TODO  cmd l refactoring
+        * TODO cmd l refactoring
         * TODO debug/release
         * TODO add serialized classes to proguard
         * TODO test on production
-        * TODO check provides schedulers
         *
         * */
 

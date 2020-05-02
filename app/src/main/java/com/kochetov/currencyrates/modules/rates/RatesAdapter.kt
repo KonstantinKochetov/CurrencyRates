@@ -5,15 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kochetov.currencyrates.R
-import com.kochetov.currencyrates.extensions.AdapterHelper
 import com.kochetov.currencyrates.usecases.rates.model.Rate
 import kotlinx.android.synthetic.main.rate_item.view.*
 
 class RatesAdapter(private val viewModel: RatesViewModel) :
-    RecyclerView.Adapter<RatesAdapter.ViewHolder>(),
-    AdapterHelper<Rate> {
+    RecyclerView.Adapter<RatesAdapter.ViewHolder>() {
 
-    private var items = mutableListOf<Rate>()
+    private var items = LinkedHashMap<String, Rate>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -25,10 +23,11 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(items.values.elementAt(position))
     }
 
-    class ViewHolder(view: View, viewModel: RatesViewModel) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, private val viewModel: RatesViewModel) : RecyclerView.ViewHolder(view) {
+
         fun bind(rate: Rate) {
             itemView.iv_flag.setImageResource(
                 itemView.context.applicationContext.resources.getIdentifier(
@@ -40,11 +39,18 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
             itemView.tv_currency_code.text = rate.currency.currencyCode
             itemView.tv_currency_name.text = rate.currency.displayName
             itemView.et_currency_amount.setText(rate.amount.toString())
+
+            itemView.setOnClickListener {
+                itemView.et_currency_amount.requestFocus()
+                viewModel.changeBase(rate)
+            }
         }
     }
 
-    override fun addAll(list: MutableList<Rate>) {
-        items = list // less work on the UI thread this way
+    fun addAll(map: Map<String, Rate>) {
+        map.forEach {
+            items[it.key] = it.value
+        }
         notifyDataSetChanged()
     }
 

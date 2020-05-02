@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.kochetov.currencyrates.R
-import com.kochetov.currencyrates.extensions.Outcome
+import com.kochetov.currencyrates.common.Outcome
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_rates.*
 import javax.inject.Inject
@@ -54,7 +54,7 @@ class RatesFragment : DaggerFragment() {
                     showDataView()
                     Log.d("kok", "Success -> ${outcome.data}")
                     if (::ratesAdapter.isInitialized) {
-                        ratesAdapter.addAll(outcome.data.rates)
+                        ratesAdapter.addAll(outcome.data)
                     }
                 }
 

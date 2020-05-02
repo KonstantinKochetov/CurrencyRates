@@ -1,37 +1,38 @@
 package com.kochetov.currencyrates.usecases.rates.model
 
 import com.google.gson.annotations.SerializedName
+import com.kochetov.currencyrates.usecases.rates.model.CurrencyRatesResponse.Companion.FLAG_PREFIX
 import java.io.Serializable
 import java.util.*
 
 data class CurrencyRatesResponse(
     @SerializedName("baseCurrency") val baseCurrency: String,
-    @SerializedName("rates") val rates: Map<String, Double>
-) : Serializable
-
-fun CurrencyRatesResponse.toCurrencyRates() = CurrencyRates(this.baseCurrency, this.rates.toList())
-
-data class CurrencyRates(
-    val baseCurrency: String,
-    val rates: MutableList<Rate>
-)
+    @SerializedName("rates") val rates: MutableMap<String, Double>
+) : Serializable {
+    companion object {
+        const val FLAG_PREFIX = "currency_flag_"
+    }
+}
 
 data class Rate(val currency: Currency, val amount: Double, val imageResString: String)
 
-fun Map<String, Double>.toList(): MutableList<Rate> {
+/**
+ * Helper functions
+ */
+fun CurrencyRatesResponse.toRatesMap(base: Rate): Map<String, Rate> {
+    val map = mutableMapOf<String, Rate>()
+    // insert base
+    map[base.currency.currencyCode] = base
 
-    val list = mutableListOf<Rate>()
-
-    this.forEach {
-        list.add(
-            Rate(
-                currency = Currency.getInstance(it.key),
-                amount = "%.2f".format(it.value).toDouble(),
-                imageResString = "currency_flag_${it.key.toLowerCase(Locale.getDefault())}"
-            )
+    // insert the rest of currencies
+    rates.forEach {
+        map[it.key] = Rate(
+            currency = Currency.getInstance(it.key),
+            amount = "%.2f".format(it.value).toDouble(),
+            imageResString = "$FLAG_PREFIX${it.key.toLowerCase(Locale.getDefault())}"
         )
     }
-    return list
+    return map
 }
 
 

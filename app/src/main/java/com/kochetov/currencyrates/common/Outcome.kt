@@ -1,4 +1,4 @@
-package com.kochetov.currencyrates.extensions
+package com.kochetov.currencyrates.common
 
 sealed class Outcome<T> {
     data class Progress<T>(var loading: Boolean) : Outcome<T>()
