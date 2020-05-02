@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_bgn" />
+        tools:src="@drawable/bgn_flag" />
 
     <TextView
         android:id="@+id/tv_currency_code"
@@ -34,7 +34,7 @@
 
 
     <TextView
-        android:id="@+id/currency_name"
+        android:id="@+id/tv_currency_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:importantForAutofill="no"
         android:inputType="numberDecimal"
+        android:layout_marginEnd="16dp"
         android:letterSpacing="0.02"
         android:lineSpacingExtra="5sp"
         android:textColor="#191C1F"

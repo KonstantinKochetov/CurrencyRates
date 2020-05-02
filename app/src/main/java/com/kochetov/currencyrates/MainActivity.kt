@@ -24,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         * */
 
         /*
+        * TODO Rotation kills it
+        * TODO check if RxJava operators delay and repeat were correct
+        * TODO use observable instead of Single?
+        * TODO adding to compositeDisposables two times
         * TODO flag icons
         * TODO app icon
         * TODO styles
