@@ -30,7 +30,13 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
 
     class ViewHolder(view: View, viewModel: RatesViewModel) : RecyclerView.ViewHolder(view) {
         fun bind(rate: Rate) {
-            itemView.iv_flag.setImageResource(R.drawable.bgn_flag)
+            itemView.iv_flag.setImageResource(
+                itemView.context.applicationContext.resources.getIdentifier(
+                    rate.imageResString,
+                    "drawable",
+                    itemView.context.applicationContext.packageName
+                )
+            )
             itemView.tv_currency_code.text = rate.currency.currencyCode
             itemView.tv_currency_name.text = rate.currency.displayName
             itemView.et_currency_amount.setText(rate.amount.toString())

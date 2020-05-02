@@ -35,9 +35,6 @@ class RatesViewModel @Inject constructor(
             .repeat()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe {
-                _state.postValue(Outcome.loading(true))
-            }
             .subscribe({
                 _state.postValue(Outcome.success(it))
             }, { error ->

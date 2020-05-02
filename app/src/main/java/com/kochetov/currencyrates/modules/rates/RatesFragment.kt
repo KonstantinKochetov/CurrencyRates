@@ -53,7 +53,7 @@ class RatesFragment : DaggerFragment() {
                 is Outcome.Success -> {
                     showDataView()
                     Log.d("kok", "Success -> ${outcome.data}")
-                    if (this::ratesAdapter.isInitialized) {
+                    if (::ratesAdapter.isInitialized) {
                         ratesAdapter.addAll(outcome.data.rates)
                     }
                 }
