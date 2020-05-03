@@ -52,21 +52,18 @@ class RatesFragment : DaggerFragment() {
             when (outcome) {
                 is Outcome.Success -> {
                     showDataView()
-                    Log.d("kok", "Success -> ${outcome.data}")
                     if (::ratesAdapter.isInitialized) {
                         ratesAdapter.addMap(map = outcome.data)
                     }
                 }
 
                 is Outcome.Progress -> {
-                    Log.d("kok", "Progress -> ${outcome.loading}")
                     if (outcome.loading) {
                         showLoadingView()
                     }
                 }
 
                 is Outcome.Failure -> {
-                    Log.d("kok", "Failure -> ${outcome.e}")
                     showDataView()
                 }
             }
