@@ -42,7 +42,7 @@ class RatesViewModel @Inject constructor(
     private val _state = MutableLiveData<Outcome<Map<String, Rate>>>()
     val state: LiveData<Outcome<Map<String, Rate>>> = _state
 
-    fun getCurrentRates() {
+    fun getCurrencyRates() {
         ratesUseCases.getCurrencyRates(base = base)
             .delay(1, TimeUnit.SECONDS)
             .repeat()
@@ -61,6 +61,6 @@ class RatesViewModel @Inject constructor(
     fun changeBase(base: Rate) {
         disposables.clear()
         this.base = base
-        getCurrentRates()
+        getCurrencyRates()
     }
 }

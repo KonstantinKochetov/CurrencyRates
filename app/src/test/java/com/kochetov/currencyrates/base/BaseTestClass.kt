@@ -19,7 +19,7 @@ open class BaseTestClass {
     }
 
     @Before
-    fun setUp() {
+    open fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true) // turn relaxUnitFun on for all mocks
     }
 }

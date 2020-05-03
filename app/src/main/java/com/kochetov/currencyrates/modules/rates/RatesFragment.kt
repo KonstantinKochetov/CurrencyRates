@@ -43,7 +43,7 @@ class RatesFragment : DaggerFragment() {
     }
 
     private fun startViewModel() {
-        viewModel.getCurrentRates()
+        viewModel.getCurrencyRates()
         observeViewModel()
     }
 
