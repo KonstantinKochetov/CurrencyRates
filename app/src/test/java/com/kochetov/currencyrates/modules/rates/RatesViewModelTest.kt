@@ -6,7 +6,8 @@ import com.kochetov.currencyrates.common.Outcome
 import com.kochetov.currencyrates.modules.rates.RatesViewModel.Companion.INITIAL_BASE
 import com.kochetov.currencyrates.usecases.rates.RatesUseCases
 import com.kochetov.currencyrates.usecases.rates.model.Rate
-import io.mockk.*
+import io.mockk.every
+import io.mockk.verify
 import io.mockk.impl.annotations.MockK
 import io.reactivex.Single
 import io.reactivex.plugins.RxJavaPlugins
@@ -15,7 +16,7 @@ import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
-class NewsViewModelTest: BaseTestClass() {
+class NewsViewModelTest : BaseTestClass() {
 
     lateinit var testScheduler: TestScheduler
 
@@ -55,11 +56,10 @@ class NewsViewModelTest: BaseTestClass() {
         viewModel.getCurrencyRates()
         testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
 
-        verify (exactly = 1) { ratesUseCases.getCurrencyRates(INITIAL_BASE) }
+        verify(exactly = 1) { ratesUseCases.getCurrencyRates(INITIAL_BASE) }
 
-        verify (exactly = 1) { stateObserver.onChanged(Outcome.success(map)) }
+        verify(exactly = 1) { stateObserver.onChanged(Outcome.success(map)) }
     }
-
 
     @Test
     fun test_change_base() {
@@ -69,9 +69,6 @@ class NewsViewModelTest: BaseTestClass() {
 
         viewModel.changeBase(rate)
 
-        verify (exactly = 1) { ratesUseCases.getCurrencyRates(rate) }
+        verify(exactly = 1) { ratesUseCases.getCurrencyRates(rate) }
     }
-
-
 }
-

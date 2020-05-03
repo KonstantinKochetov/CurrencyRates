@@ -3,7 +3,8 @@ package com.kochetov.currencyrates.usecases.rates.model
 import com.google.gson.annotations.SerializedName
 import com.kochetov.currencyrates.usecases.rates.model.RatesResponse.Companion.FLAG_PREFIX
 import java.io.Serializable
-import java.util.*
+import java.util.Currency
+import java.util.Locale
 
 data class RatesResponse(
     @SerializedName("baseCurrency") val baseCurrency: String,

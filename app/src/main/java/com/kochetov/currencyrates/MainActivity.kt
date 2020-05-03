@@ -18,8 +18,8 @@ class MainActivity : AppCompatActivity() {
         NavComponent
 
         Tools:
-        TODO: Ktlint as linter (from terminal)
-        TODO: Mockito for testing
+        Ktlint as linter (from terminal)
+        MockK for testing
         */
     }
 }

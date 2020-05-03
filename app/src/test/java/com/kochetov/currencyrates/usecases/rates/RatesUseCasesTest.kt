@@ -8,9 +8,9 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.reactivex.Single
 import org.junit.Test
-import java.util.*
+import java.util.Currency
 
-class RatesUseCasesTest: BaseTestClass() {
+class RatesUseCasesTest : BaseTestClass() {
 
     companion object {
         const val BASE_CODE = "EUR"
@@ -22,7 +22,11 @@ class RatesUseCasesTest: BaseTestClass() {
     @MockK
     lateinit var api: RatesApi
 
-    private val baseRate = Rate(currency = Currency.getInstance(BASE_CODE), amount = BASE_AMOUNT, imageResString = "test")
+    private val baseRate = Rate(
+        currency = Currency.getInstance(BASE_CODE),
+        amount = BASE_AMOUNT,
+        imageResString = "test"
+    )
 
     private val useCases: RatesUseCases by lazy {
         RatesUseCasesImpl(
@@ -34,7 +38,8 @@ class RatesUseCasesTest: BaseTestClass() {
         baseCurrency = BASE_CODE,
         rates = mutableMapOf(
             USD_CODE to 1.13
-        ))
+        )
+    )
 
     @Test
     fun test_get_currency_rates_success() {
