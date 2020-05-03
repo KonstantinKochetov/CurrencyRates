@@ -115,10 +115,10 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
                 items.forEachIndexed { index, item ->
                     map[item.currency.currencyCode]?.let { rate ->
                         newItems.add(rate)
-                        notifyItemChanged(
+                        notifyItemChanged( // updating only et_currency_amount view instead of redrawing all views
                             index,
                             PAYLOAD_UPDATE
-                        ) // updating only et_currency_amount view instead of redrawing all views
+                        )
                     }
                 }
                 items = newItems
