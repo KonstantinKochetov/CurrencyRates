@@ -3,6 +3,7 @@ package com.kochetov.currencyrates.modules.rates
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.kochetov.currencyrates.R
 import com.kochetov.currencyrates.usecases.rates.model.Rate
@@ -11,7 +12,11 @@ import kotlinx.android.synthetic.main.rate_item.view.*
 class RatesAdapter(private val viewModel: RatesViewModel) :
     RecyclerView.Adapter<RatesAdapter.ViewHolder>() {
 
-    private var items = LinkedHashMap<String, Rate>()
+    companion object {
+        const val PAYLOAD_BASE = 1
+    }
+
+    private var items = mutableListOf<Rate>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -23,12 +28,36 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items.values.elementAt(position))
+        holder.bind(
+            items[position]
+        ) { index ->
+            val temp = items[index]
+            items.removeAt(index)
+            items.add(0, temp)
+            notifyItemMoved(index, 0)
+        }
     }
 
-    class ViewHolder(view: View, private val viewModel: RatesViewModel) : RecyclerView.ViewHolder(view) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isNotEmpty()) {
+            when (payloads[0]) {
+                PAYLOAD_BASE -> {
+                    if (position != 0) {
+                        holder.updateAmount(items[position])
+                    }
+                }
+            }
+        }
+        super.onBindViewHolder(holder, position, payloads)
+    }
 
-        fun bind(rate: Rate) {
+    class ViewHolder(view: View, private val viewModel: RatesViewModel) :
+        RecyclerView.ViewHolder(view) {
+
+        fun bind(
+            rate: Rate,
+            updateList: (Int) -> Unit
+        ) {
             itemView.iv_flag.setImageResource(
                 itemView.context.applicationContext.resources.getIdentifier(
                     rate.imageResString,
@@ -38,20 +67,59 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
             )
             itemView.tv_currency_code.text = rate.currency.currencyCode
             itemView.tv_currency_name.text = rate.currency.displayName
-            itemView.et_currency_amount.setText(rate.amount.toString())
+            if (!itemView.et_currency_amount.isFocused) {
+                itemView.et_currency_amount.setText(rate.amount.toString())
+            }
 
             itemView.setOnClickListener {
-                itemView.et_currency_amount.requestFocus()
-                viewModel.changeBase(rate)
+                if (!itemView.et_currency_amount.isFocused) itemView.et_currency_amount.requestFocus()
+            }
+
+            itemView.et_currency_amount.setOnFocusChangeListener { _, isFocused ->
+                if (isFocused) {
+                    updateList(adapterPosition)
+                    viewModel.changeBase(base = rate)
+                }
+            }
+
+            itemView.et_currency_amount.doAfterTextChanged {
+                if (itemView.et_currency_amount.isFocused) {
+                    viewModel.changeBase(
+                        base = Rate(
+                            currency = rate.currency,
+                            amount = it.toString().toDoubleOrNull() ?: 0.0,
+                            imageResString = rate.imageResString
+                        )
+                    )
+                }
+            }
+        }
+
+        fun updateAmount(rate: Rate) {
+            if (!itemView.et_currency_amount.isFocused) {
+                itemView.et_currency_amount.setText(rate.amount.toString())
             }
         }
     }
 
-    fun addAll(map: Map<String, Rate>) {
-        map.forEach {
-            items[it.key] = it.value
-        }
-        notifyDataSetChanged()
-    }
+    fun addMap(map: Map<String, Rate>) {
+        val newItems = mutableListOf<Rate>()
 
+        when {
+            items.isEmpty() -> {
+                newItems.addAll(map.values)
+                items = newItems
+                notifyDataSetChanged()
+            }
+            else -> {
+                items.forEachIndexed { index, item ->
+                    map[item.currency.currencyCode]?.let { rate ->
+                        newItems.add(rate)
+                        notifyItemChanged(index, PAYLOAD_BASE)
+                    }
+                }
+                items = newItems
+            }
+        }
+    }
 }

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         * */
 
         /*
-        * TODO Inject base without restarting the flwo
+        * TODO leak canary / profiler
         * TODO Custom Errors
         * TODO check if RxJava operators delay, repeat, retry were correct
         * TODO app icon

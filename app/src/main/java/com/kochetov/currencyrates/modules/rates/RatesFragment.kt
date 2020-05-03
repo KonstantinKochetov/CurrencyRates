@@ -54,7 +54,7 @@ class RatesFragment : DaggerFragment() {
                     showDataView()
                     Log.d("kok", "Success -> ${outcome.data}")
                     if (::ratesAdapter.isInitialized) {
-                        ratesAdapter.addAll(outcome.data)
+                        ratesAdapter.addMap(map = outcome.data)
                     }
                 }
 
@@ -71,7 +71,6 @@ class RatesFragment : DaggerFragment() {
                 }
             }
         })
-
     }
 
     private fun showDataView() {

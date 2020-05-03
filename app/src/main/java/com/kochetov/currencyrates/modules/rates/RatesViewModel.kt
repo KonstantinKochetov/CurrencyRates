@@ -35,7 +35,7 @@ class RatesViewModel @Inject constructor(
     val state: LiveData<Outcome<Map<String, Rate>>> = _state
 
     fun getCurrentRates() {
-        currencyUseCases.getCurrencyRates(base)
+        currencyUseCases.getCurrencyRates(base =base)
             .delay(1, TimeUnit.SECONDS)
             .repeat()
             .retry()
