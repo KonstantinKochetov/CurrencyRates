@@ -13,9 +13,11 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class CurrencyRatesModule {
 
-    @ContributesAndroidInjector(modules = [
-        ViewModelBuilder::class
-    ])
+    @ContributesAndroidInjector(
+        modules = [
+            ViewModelBuilder::class
+        ]
+    )
     abstract fun ratesFragment(): RatesFragment
 
     @Binds

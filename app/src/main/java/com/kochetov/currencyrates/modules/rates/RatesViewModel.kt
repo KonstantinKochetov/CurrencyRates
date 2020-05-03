@@ -3,20 +3,28 @@ package com.kochetov.currencyrates.modules.rates
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kochetov.currencyrates.common.*
-import com.kochetov.currencyrates.usecases.rates.CurrencyUseCases
+import com.kochetov.currencyrates.common.Outcome
+import com.kochetov.currencyrates.usecases.rates.RatesUseCases
 import com.kochetov.currencyrates.usecases.rates.model.Rate
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
-import java.util.*
+import java.util.Currency
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class RatesViewModel @Inject constructor(
-    private val currencyUseCases: CurrencyUseCases
+    private val ratesUseCases: RatesUseCases
 ) : ViewModel() {
+
+    companion object {
+        val INITIAL_BASE = Rate(
+            currency = Currency.getInstance("EUR"),
+            amount = 1.00,
+            imageResString = "currency_flag_eur"
+        )
+    }
 
     val disposables = CompositeDisposable()
 
@@ -25,17 +33,17 @@ class RatesViewModel @Inject constructor(
         disposables.dispose()
     }
 
-    var base: Rate
+    private var base: Rate
 
     init {
-        base = Rate(currency = Currency.getInstance("EUR"), amount = 1.00, imageResString = "currency_flag_eur")
+        base = INITIAL_BASE
     }
 
     private val _state = MutableLiveData<Outcome<Map<String, Rate>>>()
     val state: LiveData<Outcome<Map<String, Rate>>> = _state
 
     fun getCurrentRates() {
-        currencyUseCases.getCurrencyRates(base =base)
+        ratesUseCases.getCurrencyRates(base = base)
             .delay(1, TimeUnit.SECONDS)
             .repeat()
             .retry()

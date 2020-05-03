@@ -13,7 +13,7 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
     RecyclerView.Adapter<RatesAdapter.ViewHolder>() {
 
     companion object {
-        const val PAYLOAD_BASE = 1
+        const val PAYLOAD_UPDATE = 1
     }
 
     private var items = mutableListOf<Rate>()
@@ -41,7 +41,7 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
         if (payloads.isNotEmpty()) {
             when (payloads[0]) {
-                PAYLOAD_BASE -> {
+                PAYLOAD_UPDATE -> {
                     if (position != 0) {
                         holder.updateAmount(items[position])
                     }
@@ -115,7 +115,10 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
                 items.forEachIndexed { index, item ->
                     map[item.currency.currencyCode]?.let { rate ->
                         newItems.add(rate)
-                        notifyItemChanged(index, PAYLOAD_BASE)
+                        notifyItemChanged(
+                            index,
+                            PAYLOAD_UPDATE
+                        ) // updating only et_currency_amount view instead of redrawing all views
                     }
                 }
                 items = newItems

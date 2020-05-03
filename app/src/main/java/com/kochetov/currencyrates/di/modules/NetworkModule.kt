@@ -1,6 +1,6 @@
 package com.kochetov.currencyrates.di.modules
 
-import com.kochetov.currencyrates.usecases.rates.api.CurrencyApi
+import com.kochetov.currencyrates.usecases.rates.api.RatesApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -33,5 +33,6 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCurrencyApi(retrofit: Retrofit): CurrencyApi = retrofit.create(CurrencyApi::class.java)
+    fun provideCurrencyApi(retrofit: Retrofit): RatesApi =
+        retrofit.create(RatesApi::class.java)
 }

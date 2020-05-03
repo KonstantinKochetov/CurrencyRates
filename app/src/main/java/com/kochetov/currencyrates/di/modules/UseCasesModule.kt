@@ -1,8 +1,8 @@
 package com.kochetov.currencyrates.di.modules
 
-import com.kochetov.currencyrates.usecases.rates.CurrencyUseCases
-import com.kochetov.currencyrates.usecases.rates.CurrencyUseCasesImpl
-import com.kochetov.currencyrates.usecases.rates.api.CurrencyApi
+import com.kochetov.currencyrates.usecases.rates.RatesUseCases
+import com.kochetov.currencyrates.usecases.rates.RatesUseCasesImpl
+import com.kochetov.currencyrates.usecases.rates.api.RatesApi
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -12,6 +12,6 @@ class UseCasesModule {
 
     @Provides
     @Singleton
-    fun providesCurrencyUseCases(api: CurrencyApi): CurrencyUseCases =
-        CurrencyUseCasesImpl(api = api)
+    fun providesCurrencyUseCases(api: RatesApi): RatesUseCases =
+        RatesUseCasesImpl(api = api)
 }

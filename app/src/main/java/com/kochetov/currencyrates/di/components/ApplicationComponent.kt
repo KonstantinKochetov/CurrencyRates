@@ -14,9 +14,9 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [AndroidSupportInjectionModule::class,
-            CurrencyRatesModule::class,
-            NetworkModule::class,
-            UseCasesModule::class]
+        CurrencyRatesModule::class,
+        NetworkModule::class,
+        UseCasesModule::class]
 )
 interface ApplicationComponent : AndroidInjector<RatesApp> {
 
