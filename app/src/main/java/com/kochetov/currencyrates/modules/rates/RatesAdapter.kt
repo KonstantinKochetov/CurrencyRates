@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kochetov.currencyrates.R
 import com.kochetov.currencyrates.usecases.rates.model.Rate
 import kotlinx.android.synthetic.main.rate_item.view.*
+import java.math.BigDecimal
+import java.text.DecimalFormat
 
 class RatesAdapter(private val viewModel: RatesViewModel) :
     RecyclerView.Adapter<RatesAdapter.ViewHolder>() {
@@ -67,9 +69,7 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
             )
             itemView.tv_currency_code.text = rate.currency.currencyCode
             itemView.tv_currency_name.text = rate.currency.displayName
-            if (!itemView.et_currency_amount.isFocused) {
-                itemView.et_currency_amount.setText(rate.amount.toString())
-            }
+            setFormattedAmountText(rate)
 
             itemView.setOnClickListener {
                 if (!itemView.et_currency_amount.isFocused) itemView.et_currency_amount.requestFocus()
@@ -87,7 +87,7 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
                     viewModel.changeBase(
                         base = Rate(
                             currency = rate.currency,
-                            amount = it.toString().toDoubleOrNull() ?: 0.0,
+                            amount = it.toString().toBigDecimalOrNull() ?: BigDecimal.ZERO,
                             imageResString = rate.imageResString
                         )
                     )
@@ -96,8 +96,12 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
         }
 
         fun updateAmount(rate: Rate) {
+            setFormattedAmountText(rate)
+        }
+
+        private fun setFormattedAmountText(rate: Rate) {
             if (!itemView.et_currency_amount.isFocused) {
-                itemView.et_currency_amount.setText(rate.amount.toString())
+                itemView.et_currency_amount.setText(rate.amount.format())
             }
         }
     }
@@ -126,3 +130,5 @@ class RatesAdapter(private val viewModel: RatesViewModel) :
         }
     }
 }
+
+private fun BigDecimal.format(): String = DecimalFormat("00.00").format(this)

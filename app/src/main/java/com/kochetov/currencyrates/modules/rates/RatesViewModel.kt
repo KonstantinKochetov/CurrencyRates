@@ -21,7 +21,7 @@ class RatesViewModel @Inject constructor(
     companion object {
         val INITIAL_BASE = Rate(
             currency = Currency.getInstance("EUR"),
-            amount = 1.00,
+            amount = 1.toBigDecimal(),
             imageResString = "currency_flag_eur"
         )
     }
