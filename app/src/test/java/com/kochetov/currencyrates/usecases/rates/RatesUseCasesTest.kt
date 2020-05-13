@@ -8,15 +8,16 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.reactivex.Single
 import org.junit.Test
+import java.math.BigDecimal
 import java.util.Currency
 
 class RatesUseCasesTest : BaseTestClass() {
 
     companion object {
         const val BASE_CODE = "EUR"
-        const val BASE_AMOUNT = 1.0
+        val BASE_AMOUNT = BigDecimal(1)
         const val USD_CODE = "USD"
-        const val USD_AMOUNT = 1.13
+        val USD_AMOUNT = BigDecimal(1.13)
     }
 
     @MockK
@@ -37,7 +38,7 @@ class RatesUseCasesTest : BaseTestClass() {
     private val response: RatesResponse = RatesResponse(
         baseCurrency = BASE_CODE,
         rates = mutableMapOf(
-            USD_CODE to 1.13
+            USD_CODE to BigDecimal(1.13)
         )
     )
 

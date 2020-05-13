@@ -30,7 +30,7 @@ fun RatesResponse.toRatesMap(base: Rate): Map<String, Rate> {
     rates.forEach {
         map[it.key] = Rate(
             currency = Currency.getInstance(it.key),
-            amount =  it.value * base.amount,
+            amount = it.value * base.amount,
             imageResString = "$FLAG_PREFIX${it.key.toLowerCase(Locale.getDefault())}"
         )
     }
